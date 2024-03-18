@@ -1,161 +1,150 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.ArrayList; // import the ArrayList class
+import java.util.HashMap; // import the HashMap class
+import java.util.List;  // import the List class
+import java.util.Map;   // import the Map class
+import java.util.Scanner; //    import the Scanner class
 
-// Interfaces
-interface User {
-    void borrowBook(String isbn);
-
-    void returnBook(String isbn);
-
-    void displayBorrowedBooks();
-
-    void displayAvailableBooks();
+// Interfaces for user and admin   
+interface User {// User interface
+    void borrowBook(String isbn); // method to borrow a book
+    void returnBook(String isbn); // method to return a book
+    void displayBorrowedBooks(); // method to display borrowed books
+    void displayAvailableBooks(); // method to display available books
 }
 
-interface Admin {
-    void addBook(Book book);
-
-    void removeBook(String isbn);
-
-    void displayAllBooks();
+interface Admin { // Admin interface
+    void addBook(Book book); // method to add a book
+    void removeBook(String isbn); // method to remove a book
+    void displayAllBooks();// method to display all books
 }
-
-// Abstract base class for book categories
-abstract class BookCategory {
-    private String name;
-
+// Abstract base class for book categories 
+abstract class BookCategory { // BookCategory class
+    private String name; // name of the category 
     public BookCategory(String name) {
-        this.name = name;
+        this.name = name; // set the name of the category 
     }
-
     public String getName() {
-        return name;
+        return name; // return the name of the category
     }
 
     // Abstract method to be implemented by subclasses
-    public abstract String getCategoryInfo();
+    public abstract String getCategoryInfo(); // method to get category information 
 }
 
 // Specific category classes
-class ChildrenBook extends BookCategory {
-    public ChildrenBook(String name) {
-        super(name);
+class ChildrenBook extends BookCategory { // ChildrenBook class extends BookCategory
+    public ChildrenBook(String name) {   // constructor
+        super(name); // call the constructor of the superclass
     }
 
     @Override
-    public String getCategoryInfo() {
-        return "Designed for children.";
+    public String getCategoryInfo() { // method to get category information
+        return "Designed for children."; // return the category information
     }
 }
-
-class Novel extends BookCategory {
-    public Novel(String name) {
-        super(name);
+class Novel extends BookCategory {// Novel class extends BookCategory
+    public Novel(String name) {// constructor
+        super(name);// call the constructor of the superclass
     }
 
-    @Override
-    public String getCategoryInfo() {
-        return "Fictional narrative, often in prose.";
-    }
-}
-
-class AdventureBook extends BookCategory {
-    public AdventureBook(String name) {
-        super(name);
-    }
-
-    @Override
-    public String getCategoryInfo() {
-        return "Exciting and often dangerous journey.";
+    @Override// method to get category information
+    public String getCategoryInfo() {// method to get category information
+        return "Fictional narrative, often in prose.";// return the category information
     }
 }
-
-class HistoryBook extends BookCategory {
-    public HistoryBook(String name) {
-        super(name);
+class AdventureBook extends BookCategory {// AdventureBook class extends BookCategory
+    public AdventureBook(String name) {// constructor 
+        super(name);// call the constructor of the superclass
     }
 
-    @Override
-    public String getCategoryInfo() {
-        return "Concerned with past events, particularly in human affairs.";
+    @Override// method to get category information
+    public String getCategoryInfo() {// method to get category information
+        return "Exciting and often dangerous journey.";// return the category information
+    }
+}
+class HistoryBook extends BookCategory {// HistoryBook class extends BookCategory
+    public HistoryBook(String name) {// constructor
+        super(name);// call the constructor of the superclass
+    }
+
+    @Override// method to get category information
+    public String getCategoryInfo() {// method to get category information
+        return "Concerned with past events, particularly in human affairs.";// return the category information
     }
 }
 
 // Book class
-class Book {
-    private String title;
-    private String author;
-    private String isbn;
-    private boolean isAvailable;
-    private BookCategory category;
+class Book { // Book class
+    private String title;   // title of the book
+    private String author;  // author of the book 
+    private String isbn;    // ISBN of the book
+    private boolean isAvailable;    // availability of the book
+    private BookCategory category;  // category of the book
 
-    public Book(String title, String author, String isbn, BookCategory category) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.isAvailable = true;
-        this.category = category;
+    public Book(String title, String author, String isbn, BookCategory category) {  // constructor
+        this.title = title;// set the title of the book
+        this.author = author;// set the author of the book
+        this.isbn = isbn;   // set the ISBN of the book
+        this.isAvailable = true;    // set the availability of the book
+        this.category = category;   // set the category of the book
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitle() {  // method to get the title of the book
+        return title;   // return the title of the book
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthor() { // method to get the author of the book
+        return author;  // return the author of the book
     }
 
-    public String getIsbn() {
-        return isbn;
+    public String getIsbn() {   // method to get the ISBN of the book
+        return isbn;    // return the ISBN of the book
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public boolean isAvailable() {  // method to check the availability of the book
+        return isAvailable;     // return the availability of the book
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setAvailable(boolean available) {   // method to set the availability of the book
+        isAvailable = available;    // set the availability of the book
     }
 
-    public BookCategory getCategory() {
-        return category;
+    public BookCategory getCategory() {     // method to get the category of the book
+        return category;    // return the category of the book
     }
 }
 
 // Library class
-class Library implements User, Admin {
-    private List<Book> books = new ArrayList<>();
-    private Map<String, BookCategory> categories = new HashMap<>();
-    private List<String> borrowedBooks = new ArrayList<>();
+class Library implements User, Admin {  // Library class implements User and Admin interfaces
+    private List<Book> books = new ArrayList<>();   // list of books
+    private Map<String, BookCategory> categories = new HashMap<>(); // map of categories
+    private List<String> borrowedBooks = new ArrayList<>(); // list of borrowed books
 
-    @Override
-    public void addBook(Book book) {
-        books.add(book);
+    @Override   // method to add a book
+    public void addBook(Book book) {    // method to add a book
+        books.add(book);    // add the book to the list of books
     }
 
-    @Override
-    public void removeBook(String isbn) {
-        books.removeIf(book -> book.getIsbn().equals(isbn));
+    @Override   // method to remove a book
+    public void removeBook(String isbn) {   // method to remove a book
+        books.removeIf(book -> book.getIsbn().equals(isbn));    // remove the book from the list of books
     }
 
-    @Override
-    public void borrowBook(String isbn) {
-        for (Book book : books) {
-            if (book.getIsbn().equals(isbn) && book.isAvailable()) {
-                book.setAvailable(false);
-                borrowedBooks.add(book.getTitle());
-                System.out.println("Book borrowed successfully.");
-                return;
+    @Override   // method to borrow a book
+    public void borrowBook(String isbn) {   // method to borrow a book
+        for (Book book : books) {   // iterate through the list of books
+            if (book.getIsbn().equals(isbn) && book.isAvailable()) {    // check if the book is available
+                book.setAvailable(false);   // set the book as unavailable
+                borrowedBooks.add(book.getTitle()); // add the book to the list of borrowed books
+                System.out.println("Book borrowed successfully.");  // print a message
+                return; // return from the method
             }
         }
-        System.out.println("Book not available for borrowing.");
+        System.out.println("Book not available for borrowing.");    // print a message
     }
 
-    @Override
-    public void returnBook(String isbn) {
+    @Override   // method to return a book
+    public void returnBook(String isbn) {   // method to return a book
         for (Book book : books) {
             if (book.getIsbn().equals(isbn) && !book.isAvailable()) {
                 book.setAvailable(true);
