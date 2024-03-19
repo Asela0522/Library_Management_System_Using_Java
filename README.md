@@ -6,7 +6,7 @@ The Library Management System is a Java application designed to facilitate the m
 
 ## Features
 
-- **Admin Role:** Administrators have the ability to:
+- ***Admin Role:*** Administrators have the ability to:
   - Display all books in the library.
   - Add new books to the library.
   - Remove existing books from the library.
